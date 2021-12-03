@@ -36,10 +36,10 @@ public class ShoppingCart {
         if (quantity <= 0)
             throw new IllegalArgumentException("Illegal quantity");
         Item item = new Item();
-        item.title = title;
-        item.price = price;
-        item.quantity = quantity;
-        item.type = type;
+        item.setTitle(title);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+        item.setType(type);
         items.add(item);
     }
 
@@ -69,17 +69,17 @@ public class ShoppingCart {
         double total = 0.00;
         int index = 0;
         for (Item item : items) {
-            int discount = calculateDiscount(item.type, item.quantity);
-            double itemTotal = item.price * item.quantity * (100.00 - discount) / 100.00;
+            item.setDiscount(calculateDiscount(item.type, item.quantity));
+            item.setTotal(item.getPrice() * item.getQuantity() * (100.00 - item.getDiscount()) / 100.00);
             lines.add(new String[]{
                 String.valueOf(++index),
                 item.title,
                 MONEY.format(item.price),
                 String.valueOf(item.quantity),
-                (discount == 0) ? "-" : (discount + "%"),
-                MONEY.format(itemTotal)
+                (item.getDiscount() == 0) ? "-" : (item.getDiscount() + "%"),
+                MONEY.format(item.getTotal())
             });
-            total += itemTotal;
+            total += item.getTotal();
         }
         String[] footer = { String.valueOf(index),"","","","", MONEY.format(total) };
         // formatting table
@@ -182,10 +182,60 @@ public class ShoppingCart {
     }
     /** item info */
     private static class Item{
-        String title;
-        double price;
-        int quantity;
-        ItemType type;
+        private String title;
+        private double price;
+        private int quantity;
+        private ItemType type;
+        private double discount;
+        private double total;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
+
+        public ItemType getType() {
+            return type;
+        }
+
+        public void setType(ItemType type) {
+            this.type = type;
+        }
+
+        public double getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(double discount) {
+            this.discount = discount;
+        }
+
+        public double getTotal() {
+            return total;
+        }
+
+        public void setTotal(double total) {
+            this.total = total;
+        }
     }
     /** Container for added items */
     private List<Item> items = new ArrayList<Item>();
