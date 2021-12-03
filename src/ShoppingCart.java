@@ -96,20 +96,16 @@ public class ShoppingCart {
         int lineLength = width.length - 1;
         for (int w : width)
             lineLength += w;
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();;
         // header
-        for (int i = 0; i < header.length; i++)
-            appendFormatted(sb, header[i], align[i], width[i]);
-            sb.append("\n");
+        appendFormattedLine(header, align, width, sb, true);
         // separator
         for (int i = 0; i < lineLength; i++)
             sb.append("-");
             sb.append("\n");
         // lines
         for (String[] line : lines) {
-            for (int i = 0; i < line.length; i++)
-                appendFormatted(sb, line[i], align[i], width[i]);
-                sb.append("\n");
+            appendFormattedLine(line, align, width, sb, true);
         }
         if (lines.size() > 0) {
             // separator
@@ -118,10 +114,16 @@ public class ShoppingCart {
             sb.append("\n");
         }
         // footer
-        for (int i = 0; i < footer.length; i++)
-            appendFormatted(sb, footer[i], align[i], width[i]);
+        appendFormattedLine(footer, align, width, sb, false);
         return sb.toString();
     }
+
+    private void appendFormattedLine(String[] header, int[] align, int[] width, StringBuilder sb, boolean newLine) {
+        for (int i = 0; i < header.length; i++)
+            appendFormatted(sb, header[i], align[i], width[i]);
+        if (newLine) sb.append("\n");
+    }
+
     // --- private section -----------------------------------------------------
     private static final NumberFormat MONEY;
         static {
