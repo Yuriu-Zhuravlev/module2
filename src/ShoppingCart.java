@@ -98,22 +98,24 @@ public class ShoppingCart {
         // header
         appendFormattedLine(header, align, width, sb, true);
         // separator
-        for (int i = 0; i < lineLength; i++)
-            sb.append("-");
-            sb.append("\n");
+        appendSeparator(lineLength, sb);
         // lines
         for (String[] line : lines) {
             appendFormattedLine(line, align, width, sb, true);
         }
         if (lines.size() > 0) {
             // separator
-            for (int i = 0; i < lineLength; i++)
-                sb.append("-");
-            sb.append("\n");
+            appendSeparator(lineLength, sb);
         }
         // footer
         appendFormattedLine(footer, align, width, sb, false);
         return sb.toString();
+    }
+
+    private void appendSeparator(int lineLength, StringBuilder sb) {
+        for (int i = 0; i < lineLength; i++)
+            sb.append("-");
+        sb.append("\n");
     }
 
     private void adjustColumnWidth(int[] width, String[] line) {
