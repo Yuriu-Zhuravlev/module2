@@ -70,7 +70,7 @@ public class ShoppingCart {
         int index = 0;
         for (Item item : items) {
             item.calculateDiscount();
-            item.setTotal(item.getPrice() * item.getQuantity() * (100.00 - item.getDiscount()) / 100.00);
+            item.calculateTotal();
             lines.add(new String[]{
                 String.valueOf(++index),
                 item.getTitle(),
@@ -236,6 +236,11 @@ public class ShoppingCart {
 
         public void setTotal(double total) {
             this.total = total;
+        }
+
+        private double calculateTotal() {
+            total = getPrice() * getQuantity() * (100.00 - getDiscount()) / 100.00;
+            return total;
         }
     }
     /** Container for added items */
