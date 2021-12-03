@@ -85,13 +85,11 @@ public class ShoppingCart {
         // formatting table
         // column max length
         int[] width = new int[]{0,0,0,0,0,0};
-        for (String[] line : lines)
-            for (int i = 0; i < line.length; i++)
-                width[i] = Math.max(width[i], line[i].length());
-        for (int i = 0; i < header.length; i++)
-            width[i] = Math.max(width[i], header[i].length());
-        for (int i = 0; i < footer.length; i++)
-            width[i] = Math.max(width[i], footer[i].length());
+        for (String[] line : lines) {
+            adjustColumnWidth(width, line);
+        }
+        adjustColumnWidth(width, header);
+        adjustColumnWidth(width, footer);
         // line length
         int lineLength = width.length - 1;
         for (int w : width)
@@ -116,6 +114,11 @@ public class ShoppingCart {
         // footer
         appendFormattedLine(footer, align, width, sb, false);
         return sb.toString();
+    }
+
+    private void adjustColumnWidth(int[] width, String[] line) {
+        for (int i = 0; i < line.length; i++)
+            width[i] = Math.max(width[i], line[i].length());
     }
 
     private void appendFormattedLine(String[] header, int[] align, int[] width, StringBuilder sb, boolean newLine) {
