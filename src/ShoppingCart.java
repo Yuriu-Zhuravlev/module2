@@ -141,13 +141,16 @@ public class ShoppingCart {
             ? (width - value.length()) / 2
             : (align == -1) ? 0 : width - value.length();
         int after = width - value.length() - before;
-        while (before-- > 0)
+        spaceAppender(sb, value, before);
+        spaceAppender(sb, " ", after);
+    }
+
+    private static void spaceAppender(StringBuilder sb, String value, int place) {
+        while (place-- > 0)
             sb.append(" ");
         sb.append(value);
-        while (after-- > 0)
-            sb.append(" ");
-        sb.append(" ");
     }
+
     /**
      * Calculates item's discount.
      * For NEW item discount is 0%;
