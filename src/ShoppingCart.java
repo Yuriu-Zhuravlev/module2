@@ -177,9 +177,6 @@ public class ShoppingCart {
             switch (type) {
                 case NEW:
                     return 0;
-                case REGULAR:
-                    discount = 0;
-                    break;
                 case SECOND_FREE:
                     if (quantity > 1)
                         discount = 50;
